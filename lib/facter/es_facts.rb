@@ -2,6 +2,12 @@ require 'net/http'
 require 'json'
 require 'yaml'
 
+Facter.add(:memory_mb) do
+     setcode do
+          Facter::Util::Resolution.exec("free -m | head -2 | tail -1 | awk {'print $2'}")
+     end
+end
+
 module EsFacts
 
   def self.add_fact(prefix, key, value)
