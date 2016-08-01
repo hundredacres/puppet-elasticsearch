@@ -6,7 +6,9 @@ gem 'puppet', puppetversion, :require => false
 gem 'beaker'
 gem 'beaker-rspec'
 gem 'metadata-json-lint'
-gem 'rspec-puppet', '2.2.0'
+gem 'rspec-puppet'
+gem 'specinfra', '~> 2.58.0'
+gem 'infrataster'
 
 gem 'pry'
 gem 'docker-api', '~> 1.0'
@@ -19,6 +21,8 @@ gem 'puppet-lint'
 gem 'puppetlabs_spec_helper'
 gem 'puppet-syntax'
 gem 'rspec-puppet-facts'
+gem 'rspec-puppet-utils'
+gem 'rspec-retry'
 gem 'webmock'
 
 # Extra Puppet-lint gems
