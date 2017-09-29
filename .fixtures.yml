@@ -1,11 +1,17 @@
 fixtures:
   forge_modules:
+    archive:
+      repo: puppet/archive
+      ref: 0.5.1
     stdlib:
       repo: puppetlabs/stdlib
-      ref: 4.11.0
-    # java:
-    #   repo: puppetlabs/java
-    #   ref: 1.6.0
+      ref: 4.13.1
+    java:
+      repo: puppetlabs/java
+      ref: 1.6.0
+    concat:
+      repo: puppetlabs/concat
+      ref: 2.2.1
     datacat:
       repo: richardc/datacat
       ref: 0.6.2
@@ -13,15 +19,11 @@ fixtures:
       repo: puppetlabs/apt
       ref: 2.2.2
     yum:
-      repo: ceritsc/yum
-      ref: 0.9.6
+      repo: puppet/yum
+      ref: 0.10.0
     zypprepo:
       repo: darin/zypprepo
       ref: 1.0.2
     java_ks: puppetlabs/java_ks
-  repositories:
-    java:
-      repo: git://github.com/tylerjl/puppetlabs-java
-      ref: f3312d7
   symlinks:
     elasticsearch: "#{source_dir}"
