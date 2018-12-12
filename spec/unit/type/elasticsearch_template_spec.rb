@@ -95,4 +95,40 @@ describe Puppet::Type.type(:elasticsearch_template) do
       end
     end
   end # of describing when validing values
+
+  describe 'insync?' do
+    # Although users can pass the type a hash structure with any sort of values
+    # - string, integer, or other native datatype - the Elasticsearch API
+    # normalizes all values to strings. In order to verify that the type does
+    # not incorrectly detect changes when values may be in string form, we take
+    # an example template and force all values to strings to mimic what
+    # Elasticsearch does.
+    it 'is idempotent' do
+      def deep_stringify(obj)
+        if obj.is_a? Array
+          obj.map { |element| deep_stringify(element) }
+        elsif obj.is_a? Hash
+          obj.merge(obj) { |_key, val| deep_stringify(val) }
+        elsif [true, false].include? obj
+          obj
+        else
+          obj.to_s
+        end
+      end
+      json = JSON.parse(File.read('spec/fixtures/templates/post_6.0.json'))
+
+      is_template = described_class.new(
+        :name => resource_name,
+        :ensure => 'present',
+        :content => json
+      ).property(:content)
+      should_template = described_class.new(
+        :name => resource_name,
+        :ensure => 'present',
+        :content => deep_stringify(json)
+      ).property(:content).should
+
+      expect(is_template.insync?(should_template)).to be_truthy
+    end
+  end
 end # of describe Puppet::Type

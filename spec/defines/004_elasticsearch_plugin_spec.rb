@@ -32,6 +32,7 @@ describe 'elasticsearch::plugin', :type => 'define' do
       context 'present' do
         let(:params) do {
           :ensure => 'present',
+          :configdir => '/etc/elasticsearch',
           :instances => 'es-plugin'
         } end
 
@@ -41,10 +42,24 @@ describe 'elasticsearch::plugin', :type => 'define' do
       context 'absent' do
         let(:params) do {
           :ensure => 'absent',
-          :instances  => 'es-plugin'
+          :instances => 'es-plugin'
         } end
 
         it { is_expected.to compile }
+      end
+
+      context 'configdir' do
+        let(:params) do {
+          :instances => 'es-plugin'
+        } end
+
+        it { should contain_elasticsearch__plugin(
+          'mobz/elasticsearch-head/1.0.0'
+        ).with_configdir('/etc/elasticsearch') }
+
+        it { should contain_elasticsearch_plugin(
+          'mobz/elasticsearch-head/1.0.0'
+        ).with_configdir('/etc/elasticsearch') }
       end
     end
 
@@ -214,7 +229,7 @@ describe 'elasticsearch::plugin', :type => 'define' do
             :ensure         => 'present',
             :instances      => 'es-plugin',
             :proxy_host     => 'es.local',
-            :proxy_port     => '8080'
+            :proxy_port     => 8080
           } end
 
           it { should contain_elasticsearch_plugin(
@@ -252,7 +267,7 @@ describe 'elasticsearch::plugin', :type => 'define' do
             :ensure         => 'present',
             :instances      => 'es-plugin',
             :proxy_host     => 'es.local',
-            :proxy_port     => '8080',
+            :proxy_port     => 8080,
             :proxy_username => 'elastic',
             :proxy_password => 'password'
           } end

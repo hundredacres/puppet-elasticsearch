@@ -1,6 +1,5 @@
 require_relative '../../helpers/unit/type/elasticsearch_rest_shared_examples'
 
-# rubocop:disable Metrics/BlockLength
 describe Puppet::Type.type(:elasticsearch_index) do
   let(:resource_name) { 'test-index' }
 
@@ -13,7 +12,7 @@ describe Puppet::Type.type(:elasticsearch_index) do
         :ensure => 'present',
         :settings => {
           'index' => {
-            'number_of_replicas' => 0
+            'number_of_replicas' => '0'
           }
         }
       )
@@ -26,13 +25,13 @@ describe Puppet::Type.type(:elasticsearch_index) do
         let(:is_settings) do
           {
             'index' => {
-              'creation_date' => '1487354196301',
+              'creation_date' => 1_487_354_196_301,
               'number_of_replicas' => 0,
               'number_of_shards' => 5,
               'provided_name' => 'a',
               'uuid' => 'vtjrcgyerviqllrakslrsw',
               'version' => {
-                'created' => '5020199'
+                'created' => 5_020_199
               }
             }
           }
@@ -47,13 +46,13 @@ describe Puppet::Type.type(:elasticsearch_index) do
         let(:is_settings) do
           {
             'index' => {
-              'creation_date' => '1487354196301',
+              'creation_date' => 1_487_354_196_301,
               'number_of_replicas' => 1,
               'number_of_shards' => 5,
               'provided_name' => 'a',
               'uuid' => 'vtjrcgyerviqllrakslrsw',
               'version' => {
-                'created' => '5020199'
+                'created' => 5_020_199
               }
             }
           }

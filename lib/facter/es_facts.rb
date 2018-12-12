@@ -10,7 +10,6 @@ end
 
 # Helper module to encapsulate custom fact injection
 module EsFacts
-
   # Add a fact to the catalog of host facts
   def self.add_fact(prefix, key, value)
     key = "#{prefix}_#{key}".to_sym
@@ -44,6 +43,11 @@ module EsFacts
   end
 
   # Entrypoint for custom fact populator
+  #
+  # This is a super old function but works; disable a bunch of checks.
+  # rubocop:disable Lint/HandleExceptions
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def self.run
     dir_prefix = '/etc/elasticsearch'
     # Ports is a hash of port_number => ssl?
@@ -117,6 +121,8 @@ module EsFacts
     rescue
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 end
 
 EsFacts.run
