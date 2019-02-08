@@ -10,13 +10,7 @@
 # @author Richard Pijnenburg <richard.pijnenburg@elasticsearch.com>
 # @author Tyler Langlois <tyler.langlois@elastic.co>
 #
-class elasticsearch::config(
-  $config_dir_perms     = '0755',
-  $log_dir_perms        = '0755',
-  $templates_import_dir = 'absent',
-  $scripts_dir          = 'absent',
-  $es_sysconfig_file_type = 'link',
-){
+class elasticsearch::config {
 
   #### Configuration
 
@@ -31,8 +25,8 @@ class elasticsearch::config(
       $elasticsearch::configdir:
         ensure => 'directory',
         group  => $elasticsearch::elasticsearch_group,
-        owner  => $elasticsearch::elasticsearch_user,
-        mode   => $config_dir_perms;
+        owner  => 'root',
+        mode   => '2750';
       $elasticsearch::datadir:
         ensure => 'directory',
         group  => $elasticsearch::elasticsearch_group,
@@ -41,7 +35,7 @@ class elasticsearch::config(
         ensure => 'directory',
         group  => $elasticsearch::elasticsearch_group,
         owner  => $elasticsearch::elasticsearch_user,
-        mode   => $log_dir_perms;
+        mode   => '0750';
       $elasticsearch::plugindir:
         ensure => 'directory',
         group  => $elasticsearch::elasticsearch_group,
@@ -49,20 +43,20 @@ class elasticsearch::config(
         mode   => 'o+Xr';
       "${elasticsearch::homedir}/lib":
         ensure  => 'directory',
-        group   => $elasticsearch::elasticsearch_group,
-        owner   => $elasticsearch::elasticsearch_user,
+        group   => '0',
+        owner   => 'root',
         recurse => true;
       $elasticsearch::homedir:
         ensure => 'directory',
         group  => $elasticsearch::elasticsearch_group,
         owner  => $elasticsearch::elasticsearch_user;
       "${elasticsearch::homedir}/templates_import":
-        ensure => $templates_import_dir,
+        ensure => 'directory',
         group  => $elasticsearch::elasticsearch_group,
         owner  => $elasticsearch::elasticsearch_user,
         mode   => '0755';
       "${elasticsearch::homedir}/scripts":
-        ensure => $scripts_dir,
+        ensure => 'directory',
         group  => $elasticsearch::elasticsearch_group,
         owner  => $elasticsearch::elasticsearch_user,
         mode   => '0755';
@@ -130,7 +124,7 @@ class elasticsearch::config(
       }
 
       file { "${elasticsearch::defaults_location}/elasticsearch":
-        ensure => $es_sysconfig_file_type,
+        ensure => 'file',
         group  => $elasticsearch::elasticsearch_group,
         owner  => $elasticsearch::elasticsearch_user,
         mode   => '0640';
