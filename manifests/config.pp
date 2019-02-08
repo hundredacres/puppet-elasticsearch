@@ -25,7 +25,7 @@ class elasticsearch::config {
       $elasticsearch::configdir:
         ensure => 'directory',
         group  => $elasticsearch::elasticsearch_group,
-        owner  => 'root',
+        owner  => $elasticsearch::elasticsearch_user,
         mode   => '2750';
       $elasticsearch::datadir:
         ensure => 'directory',
@@ -43,8 +43,8 @@ class elasticsearch::config {
         mode   => 'o+Xr';
       "${elasticsearch::homedir}/lib":
         ensure  => 'directory',
-        group   => '0',
-        owner   => 'root',
+        group   => $elasticsearch::elasticsearch_group,
+        owner   => $elasticsearch::elasticsearch_user,
         recurse => true;
       $elasticsearch::homedir:
         ensure => 'directory',
